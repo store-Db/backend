@@ -34,5 +34,6 @@ public class Fournisseur {
     private DetailFournisseur detailFournisseur;
 
     @OneToMany(mappedBy = "fournisseur")
+    @JsonIgnore
     private Set<Facture> factures;
 }

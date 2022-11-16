@@ -10,13 +10,10 @@ import tn.test.spring.Services.Fournisseur.FournisseurServiceImp;
 @RestController
 @RequestMapping("/fournisseur")
 public class FournisseurController {
-    @Autowired
-    FournisseurServiceImp fournisseurServiceImp;
+//    @Autowired
+//    FournisseurServiceImp fournisseurServiceImp;
 
-    @GetMapping("{idSA}/{idF}")
-    public void assignSecteurActiviteToFournisseur(@PathVariable(value = "idSA") Long fournisseurId, @PathVariable(value = "idF") Long secteurActiviteId) {
-        fournisseurServiceImp.assignSecteurActiviteToFournisseur(fournisseurId, secteurActiviteId);
-    }
+
 
 
 }

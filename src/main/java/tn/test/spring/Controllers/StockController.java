@@ -37,4 +37,6 @@ public class StockController {
     public Stock updateStock(@RequestBody Stock s) {
         return stockServiceImp.updateStock(s);
     }
+
+
 }
