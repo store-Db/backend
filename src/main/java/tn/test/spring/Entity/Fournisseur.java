@@ -1,0 +1,38 @@
+package tn.test.spring.Entity;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import javax.persistence.*;
+import java.util.Set;
+
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Entity
+public class Fournisseur {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long idFournissuer;
+
+    private String CodeFournisseur;
+
+    private String libelleFournisseur;
+    @Enumerated(EnumType.STRING)
+    private tn.test.spring.Entity.CategorieFournisseur CategorieFournisseur;
+
+    @ManyToMany(mappedBy = "fournisseurs")
+    @JsonIgnore
+    private Set<SecteurActivite> secteurActivites;
+
+    @OneToOne
+    private DetailFournisseur detailFournisseur;
+
+    @OneToMany(mappedBy = "fournisseur")
+    private Set<Facture> factures;
+}
