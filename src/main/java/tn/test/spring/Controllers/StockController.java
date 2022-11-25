@@ -3,7 +3,7 @@ package tn.test.spring.Controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import tn.test.spring.Entity.Stock;
-import tn.test.spring.Services.Stock.StockServiceImp;
+import tn.test.spring.Services.Stock.StockService;
 
 import java.util.List;
 
@@ -11,7 +11,7 @@ import java.util.List;
 @RequestMapping("/stock")
 public class StockController {
     @Autowired
-    StockServiceImp stockServiceImp;
+    StockService stockServiceImp;
 
     @GetMapping
     public List<Stock> retrieveAll() {

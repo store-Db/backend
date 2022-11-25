@@ -43,11 +43,11 @@ public class StockServiceImp implements StockService {
     }
 
     @Override
-    @Scheduled(cron = " 0 00 22 ? * *" )
-    public String retrieveStatusStock()  {
-        String message  =" " ;
-        List<Stock> stocks  = this.retrieveAllStocks() ;
-        for(Stock stock :stocks) {
+    @Scheduled(cron = " 0 00 22 ? * *")
+    public String retrieveStatusStock() {
+        String message = " ";
+        List<Stock> stocks = this.retrieveAllStocks();
+        for (Stock stock : stocks) {
             if (stock.getQte() < stock.getQteMin()) {
                 message = " la quantité disponible\n" +
                         "est inférieure à la quantité min toléré. \n"
@@ -56,7 +56,7 @@ public class StockServiceImp implements StockService {
             }
         }
 
-        return message ;
+        return message;
     }
 
 

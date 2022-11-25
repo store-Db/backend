@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import tn.test.spring.Entity.Facture;
 import tn.test.spring.Entity.Reglement;
 import tn.test.spring.Repository.ReglementRepositrory;
-import tn.test.spring.Services.Facture.FactureServiceImp;
+import tn.test.spring.Services.Facture.FactureService;
 import tn.test.spring.Services.GServiceImp;
 
 import java.util.ArrayList;
@@ -17,36 +17,36 @@ import java.util.Set;
 public class ReglementServiceImp extends GServiceImp<Reglement, Long> implements ReglementService {
 
     @Autowired
-    FactureServiceImp factureServiceImp ;
+    FactureService factureServiceImp;
 
     @Autowired
-    ReglementRepositrory reglementRepositrory ;
+    ReglementRepositrory reglementRepositrory;
 
     @Override
     public List<Reglement> retrieveReglementByFacture(Long idFacture) {
-        Facture facture   = factureServiceImp.findById(idFacture);
-        return  reglementRepositrory.getReglementByFacture(facture);
+        Facture facture = factureServiceImp.findById(idFacture);
+        return reglementRepositrory.getReglementByFacture(facture);
     }
 
     @Override
     public Reglement addReglement(Reglement r, Long idFacture) {
-        List<Reglement> reglements = new ArrayList<>() ;
+        List<Reglement> reglements = new ArrayList<>();
         reglements = this.retrieveReglementByFacture(idFacture);
         Facture facture = factureServiceImp.findById(idFacture);
-        float somme = 0f ;
-        float rest = 0f ;
-        float Mfacture  = facture.getMontantFacture() ;
+        float somme = 0f;
+        float rest = 0f;
+        float Mfacture = facture.getMontantFacture();
         for (Reglement reglement : reglements) {
             somme += reglement.getMontantRestant();
 
         }
         rest = Mfacture - somme;
-        if(r.getMontantRestant() <= rest ){
+        if (r.getMontantRestant() <= rest) {
             r.setFacture(facture);
-            this.add(r) ;
-            return  r ;
-        }else
-            return  null ;
+            this.add(r);
+            return r;
+        } else
+            return null;
 
     }
 
@@ -69,20 +69,20 @@ public class ReglementServiceImp extends GServiceImp<Reglement, Long> implements
 
     @Override
     public float pourcentageRecouvrement(Date startDate, Date endDate) {
-        List<Facture> factures = factureServiceImp.retrieveAll() ;
-        float totalReg = 0f ;
-        float totalFac = 0f ;
-        float percentage = 0f ;
-        for(Facture facture : factures ){
-            if(facture.getDateCreationFacture().after(startDate) && facture.getDateCreationFacture().before(endDate)&& !facture.isArchive()){
-                totalFac += facture.getMontantFacture()  ;
-                Set<Reglement> r = facture.getReglements() ;
-                for (Reglement reg : r ){
+        List<Facture> factures = factureServiceImp.retrieveAll();
+        float totalReg = 0f;
+        float totalFac = 0f;
+        float percentage = 0f;
+        for (Facture facture : factures) {
+            if (facture.getDateCreationFacture().after(startDate) && facture.getDateCreationFacture().before(endDate) && !facture.isArchive()) {
+                totalFac += facture.getMontantFacture();
+                Set<Reglement> r = facture.getReglements();
+                for (Reglement reg : r) {
                     totalReg += reg.getMontantRestant();
                 }
             }
         }
-        percentage = (totalReg/totalFac)*100 ;
+        percentage = (totalReg / totalFac) * 100;
         return percentage;
     }
 }

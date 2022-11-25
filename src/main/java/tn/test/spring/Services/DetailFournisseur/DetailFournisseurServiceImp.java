@@ -1,9 +1,10 @@
 package tn.test.spring.Services.DetailFournisseur;
 
-import org.springframework.stereotype.Service;
+import tn.test.spring.Entity.DetailFournisseur;
 import tn.test.spring.Services.GServiceImp;
 
-public class DetailFournisseurServiceImp extends GServiceImp<DetailFoutnisseurService, Long> implements DetailFoutnisseurService {
+//@Service
+public class DetailFournisseurServiceImp extends GServiceImp<DetailFournisseur, Long> implements DetailFoutnisseurService {
 
 }
 

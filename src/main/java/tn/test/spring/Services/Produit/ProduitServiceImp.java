@@ -5,14 +5,12 @@ import org.springframework.stereotype.Service;
 import tn.test.spring.Entity.Produit;
 import tn.test.spring.Entity.Stock;
 import tn.test.spring.Services.GServiceImp;
-import tn.test.spring.Services.Stock.StockServiceImp;
-
-import javax.transaction.Transactional;
+import tn.test.spring.Services.Stock.StockService;
 
 @Service
-public class ProduitServiceImp extends GServiceImp<Produit, Long> implements ProduitSerive {
+public class ProduitServiceImp extends GServiceImp<Produit, Long> implements ProduitService {
     @Autowired
-    StockServiceImp stockServiceImp;
+    StockService stockServiceImp;
 
     @Override
     public void assignProduitToStock(Long idProduit, Long idStock) {

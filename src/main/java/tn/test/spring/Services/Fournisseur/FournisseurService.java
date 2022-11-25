@@ -1,8 +1,10 @@
 package tn.test.spring.Services.Fournisseur;
 
-import tn.test.spring.Entity.Facture;
+import tn.test.spring.Entity.Fournisseur;
+import tn.test.spring.Services.GService;
 
-import java.util.List;
+public interface FournisseurService extends GService<Fournisseur, Long> {
 
-public interface FournisseurService {
+
 }
+

@@ -1,4 +1,9 @@
 package tn.test.spring.Services.DetailFournisseur;
 
-public interface DetailFoutnisseurService {
+import tn.test.spring.Entity.DetailFournisseur;
+import tn.test.spring.Services.GService;
+
+public interface DetailFoutnisseurService extends GService<DetailFournisseur, Long> {
+
 }
+

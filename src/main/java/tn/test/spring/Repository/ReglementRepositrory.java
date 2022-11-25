@@ -9,6 +9,5 @@ public interface ReglementRepositrory extends GRepository<Reglement, Long> {
     List<Reglement> getReglementByFacture(Facture facture);
 
 
-
 }
 
