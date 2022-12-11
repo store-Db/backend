@@ -1,5 +1,6 @@
 package tn.test.spring.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,5 +26,6 @@ public class Stock {
     private String libelleStock;
 
     @OneToMany(mappedBy = "stock")
+    @JsonIgnore
     private Set<Produit> produits;
 }

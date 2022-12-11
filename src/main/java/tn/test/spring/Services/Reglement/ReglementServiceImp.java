@@ -57,7 +57,7 @@ public class ReglementServiceImp extends GServiceImp<Reglement, Long> implements
 
         for (Reglement reglement : reglements) {
             try {
-                if (reglement.getDateReglement().after(startDate) && reglement.getDateReglement().before(endDate) && !reglement.getFacture().isArchive()) {
+                if (reglement.getDate().after(startDate) && reglement.getDate().before(endDate) && !reglement.getFacture().isArchive()) {
                     chiffreAffaire += reglement.getMontantRestant();
                 }
             } catch (Exception e) {

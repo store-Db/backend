@@ -26,10 +26,9 @@ public class Reglement {
     private boolean payee;
 
     @Temporal(TemporalType.DATE)
-    private Date dateReglement;
+    private Date Date;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JsonIgnore
     private Facture facture;
 
 }

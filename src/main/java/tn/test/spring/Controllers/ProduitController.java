@@ -8,29 +8,30 @@ import tn.test.spring.Services.Produit.ProduitService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/Produit")
+@CrossOrigin(origins = "http://localhost:4200")
+@RequestMapping("/produit")
 public class ProduitController {
 
     @Autowired
     ProduitService produitServiceImp;
     ;
 
-    @PostMapping
+    @PostMapping("/add")
     public Produit addProduit(@RequestBody Produit produit) {
         return produitServiceImp.add(produit);
     }
 
-    @GetMapping
+    @GetMapping("/all")
     public List<Produit> getAll() {
         return produitServiceImp.retrieveAll();
     }
 
-    @PutMapping
+    @PutMapping("/edit")
     public Produit updateProduit(@RequestBody Produit produit) {
         return produitServiceImp.update(produit);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/retrieve/{id}")
     public Produit getProduit(@PathVariable(value = "id") long id) {
         return produitServiceImp.findById(id);
     }

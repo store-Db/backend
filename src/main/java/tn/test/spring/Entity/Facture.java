@@ -1,5 +1,6 @@
 package tn.test.spring.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -32,6 +33,7 @@ public class Facture {
     private boolean archive;
 
     @OneToMany(mappedBy = "facture")
+    @JsonIgnore
     private Set<Reglement> reglements;
 
     @OneToMany(mappedBy = "facture")

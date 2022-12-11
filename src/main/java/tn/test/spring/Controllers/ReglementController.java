@@ -9,12 +9,41 @@ import java.util.Date;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/reglement")
 public class ReglementController {
 
     @Autowired
     ReglementService reglementServiceImp;
 
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
+    public Reglement save(@RequestBody Reglement reg) throws Exception {
+        Reglement Response = (Reglement) reglementServiceImp.add(reg);
+        return Response;
+    }
+    @RequestMapping(value = "/all", method = RequestMethod.GET)
+    public List<Reglement> RetrieveAll() {
+        try {
+            return reglementServiceImp.retrieveAll();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    public void delete(@PathVariable Long id) {
+        try {
+            reglementServiceImp.delete(id);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+    @RequestMapping(value = "/edit", method = RequestMethod.PUT)
+    public Reglement update(@RequestBody Reglement reg) throws Exception {
+        return reglementServiceImp.update(reg);
+    }
     @GetMapping("/{idFacture}")
     public List<Reglement> retrieveReglementByFacture(@PathVariable(value = "idFacture") Long idFacture) {
         return reglementServiceImp.retrieveReglementByFacture(idFacture);
