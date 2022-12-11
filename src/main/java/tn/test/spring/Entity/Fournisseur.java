@@ -1,6 +1,6 @@
 package tn.test.spring.Entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -31,9 +31,13 @@ public class Fournisseur {
     private Set<SecteurActivite> secteurActivites;
 
     @OneToOne
+    @JsonIncludeProperties({"idDetailFournisseur"})
+    @JsonIgnore
     private DetailFournisseur detailFournisseur;
 
     @OneToMany(mappedBy = "fournisseur")
     @JsonIgnore
     private Set<Facture> factures;
+
+    private String addresse ;
 }
