@@ -34,6 +34,7 @@ public class GServiceImp<T, ID> implements GService<T, ID> {
 
     @Override
     public T findById(ID id) {
+
         return gRepository.findById(id).get();
     }
 }

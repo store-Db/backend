@@ -1,5 +1,7 @@
 package tn.test.spring.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,9 +27,11 @@ public class DetailFacture {
 
     private float montantRemise;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    private Facture facture;
+    @ManyToOne(cascade = CascadeType.DETACH,fetch=FetchType.EAGER)
+
+   private Facture facture;
 
     @ManyToOne(cascade = CascadeType.ALL)
+    @JsonIgnoreProperties("produit")
     private Produit produit;
 }

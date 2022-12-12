@@ -28,13 +28,14 @@ public class StockController {
         return stockServiceImp.retrieveStock(id);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping
     public void deleteStock(@PathVariable Long id) {
         stockServiceImp.removeStock(id);
     }
 
     @PutMapping
     public Stock updateStock(@RequestBody Stock s) {
+
         return stockServiceImp.updateStock(s);
     }
 
