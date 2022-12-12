@@ -17,13 +17,13 @@ public class FactureController {
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public Facture save(@RequestBody Facture fa) throws Exception {
-        Facture Response = (Facture) factureServiceImp.add(fa);
+        Facture Response = (Facture) factureService.add(fa);
         return Response;
     }
     @RequestMapping(value = "/all", method = RequestMethod.GET)
     public List<Facture> RetrieveAll() {
         try {
-            return factureServiceImp.retrieveAll();
+            return factureService.retrieveAll();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -33,7 +33,7 @@ public class FactureController {
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public void delete(@PathVariable Long id) {
         try {
-            factureServiceImp.delete(id);
+            factureService.delete(id);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -41,7 +41,7 @@ public class FactureController {
     }
     @GetMapping("/{idFournisseur}")
     public List<Facture> getFacturesByFournisseur(@PathVariable(value = "idFournisseur") Long idFournisseur) {
-        return factureServiceImp.getFacturesByFournisseur(idFournisseur);
+        return factureService.getFacturesByFournisseur(idFournisseur);
     }
 
     @PostMapping("/add")
