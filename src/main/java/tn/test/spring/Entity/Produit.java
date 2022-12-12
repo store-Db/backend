@@ -33,12 +33,12 @@ public class Produit {
     private Date dateDernierModification;
 
     private boolean archive;
-
+    private String image;
     @ManyToOne(cascade = CascadeType.ALL)
+    @JsonIgnore
     private CategorieProduit categorieProduit;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JsonIgnore
     private Stock stock;
 
     @OneToMany(mappedBy = "produit")

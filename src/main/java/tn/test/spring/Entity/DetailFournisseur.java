@@ -1,5 +1,6 @@
 package tn.test.spring.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,10 +22,9 @@ public class DetailFournisseur {
     @Temporal(TemporalType.DATE)
     private Date dateDebutCollaboration;
 
-    private String adresse;
-
     private String matricule;
 
     @OneToOne
+
     private Fournisseur fournisseur;
 }
