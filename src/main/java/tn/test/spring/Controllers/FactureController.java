@@ -44,7 +44,7 @@ public class FactureController {
         return factureService.getFacturesByFournisseur(idFournisseur);
     }
 
-    @PostMapping("/add")
+    @PostMapping()
     public Facture add(@RequestBody Facture s) {
 
         return factureService.add(s);
@@ -57,7 +57,7 @@ public class FactureController {
         return factureService.findById(id);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("kk/{id}")
     public void deleteFacture(@PathVariable Long id) {
 
         factureService.delete(id);
