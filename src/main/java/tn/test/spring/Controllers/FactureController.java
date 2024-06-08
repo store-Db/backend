@@ -10,7 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/facture")
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "http://angular:8080")
 public class FactureController {
     @Autowired
     FactureService factureService;
@@ -46,8 +46,7 @@ public class FactureController {
 
     @PostMapping()
     public Facture add(@RequestBody Facture s) {
-
-        return factureService.add(s);
+      return factureService.add(s);
     }
 
 

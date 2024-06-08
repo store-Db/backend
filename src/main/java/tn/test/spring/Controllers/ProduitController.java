@@ -8,7 +8,7 @@ import tn.test.spring.Services.Produit.ProduitService;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "http://angular:8080")
 @RequestMapping("/produit")
 public class ProduitController {
 
