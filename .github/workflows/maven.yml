@@ -56,9 +56,9 @@ jobs:
     - name: Build and tag Docker image
       run: |
         docker build -t ${{ secrets.DOCKER_HUB_USERNAME }}/docker-spring-boot-postgres:springv0.2 .
-        docker tag ${{ secrets.DOCKER_HUB_USERNAME }}/docker-spring-boot-postgres:springv0.2 ${{ secrets.DOCKER_HUB_USERNAME }}/docker-spring-boot-postgres:latest
+        docker tag ${{ secrets.DOCKER_HUB_USERNAME }}/docker-spring-boot-postgres:springv0.2 ${{ secrets.DOCKER_HUB_USERNAME }}/docker-spring-boot-postgres:springv0.3
 
     - name: Push Docker image
       run: |
         docker push ${{ secrets.DOCKER_HUB_USERNAME }}/docker-spring-boot-postgres:springv0.2
-        docker push ${{ secrets.DOCKER_HUB_USERNAME }}/docker-spring-boot-postgres:latest
+        docker push ${{ secrets.DOCKER_HUB_USERNAME }}/docker-spring-boot-postgres:springv0.3
