@@ -1,89 +1,66 @@
-name: Java CI with Maven and Docker
+name: CI/CD for Angular
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
   pull_request:
-    branches: [ "main" ]
+    branches: ["main"]
 
 jobs:
-  build:
-
-    runs-on: ubuntu-20.04
-
-    services:
-      postgres:
-        image: postgres:13
-        ports:
-          - 5432:5432
-        env:
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: root
-          POSTGRES_DB: test
-        options: >-
-          --health-cmd "pg_isready -U postgres"
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
+  build-and-deploy:
+    runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
-    - name: Wait for PostgreSQL to be ready
-      run: sleep 30
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
 
-    - name: Set up JDK 17
-      uses: actions/setup-java@v3
-      with:
-        java-version: '17'
-        distribution: 'temurin'
-        cache: maven
+      - name: Install dependencies
+        run: npm install
 
-    - name: Build with Maven
-      run: mvn clean install
-      env:
-        SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/test
-        SPRING_DATASOURCE_USERNAME: postgres
-        SPRING_DATASOURCE_PASSWORD: root
+      - name: Build Angular app
+        run: npm run build --if-present
 
-    - name: Log in to Docker Hub
-      uses: docker/login-action@v2
-      with:
-        username: ${{ secrets.DOCKER_HUB_USERNAME }}
-        password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
 
-    - name: Build and tag Docker image
-      run: docker build -t ${{ secrets.DOCKER_HUB_USERNAME }}/docker-spring-boot-postgres:springv0.3 .
+      - name: Build Docker image
+        run: docker build -t ${{ secrets.DOCKER_HUB_USERNAME }}/angular-app:v0.3 .
 
-    - name: Push Docker image
-      run: docker push ${{ secrets.DOCKER_HUB_USERNAME }}/docker-spring-boot-postgres:springv0.3
+      - name: Push Docker image
+        run: docker push ${{ secrets.DOCKER_HUB_USERNAME }}/angular-app:v0.3
 
-    - name: Checkout manifests repository
-      uses: actions/checkout@v2
-      with:
-        repository: store-Db/manifest
-        path: manifests
+      - name: Checkout manifests repository
+        uses: actions/checkout@v2
+        with:
+          repository: store-Db/manifest
+          path: manifests
 
-    - name: Update manifest
-      run: |
-        sed -i 's#image: .*$#image: ${{ secrets.DOCKER_HUB_USERNAME }}/docker-spring-boot-postgres:springv0.3#g' manifests/work/back.yaml
+      - name: Update manifest
+        run: |
+          ls -l manifests/mani/frontend  # Check if the directory exists and list its contents
+          sed -i 's#image: .*$#image: '"${{ secrets.DOCKER_HUB_USERNAME }}/angular-app:v0.3"'#g' manifests/mani/frontend/dep.yaml
 
-    - name: Commit and push changes
-      run: |
-        cd manifests
-        git config --global user.email "you@example.com"
-        git config --global user.name "Your Name"
-        git add .
-        git commit -m "Update Spring Boot app image to v0.3"
-        git push
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Commit and push changes
+        run: |
+          cd manifests
+          git config --global user.email "you@example.com"
+          git config --global user.name "Your Name"
+          git add .
+          git commit -m "Update Angular app image to v0.3"
+          git push https://store-Db:${{ secrets.PAT_GITHUB }}@github.com/store-Db/manifest.git HEAD:main
 
-    - name: Sync Argo CD application
-      run: |
-        argocd app sync spring-boot-app
-      env:
-        ARGOCD_SERVER: ${{ secrets.ARGOCD_SERVER }}
-        ARGOCD_USERNAME: ${{ secrets.ARGOCD_USERNAME }}
-        ARGOCD_PASSWORD: ${{ secrets.ARGOCD_PASSWORD }}
+      - name: Sync Argo CD application
+        run: |
+          argocd app sync angular-app
+        env:
+          ARGOCD_SERVER: ${{ secrets.ARGOCD_SERVER }}
+          ARGOCD_USERNAME: ${{ secrets.ARGOCD_USERNAME }}
+          ARGOCD_PASSWORD: ${{ secrets.ARGOCD_PASSWORD }}
