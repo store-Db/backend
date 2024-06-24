@@ -53,10 +53,10 @@ jobs:
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
 
       - name: Build and tag Docker image
-        run: docker build -t ${{ secrets.DOCKER_HUB_USERNAME }}/docker-spring-boot-postgres:springv0.2 .
+        run: docker build -t ${{ secrets.DOCKER_HUB_USERNAME }}/docker-spring-boot-postgres:springv0.3 .
 
       - name: Push Docker image
-        run: docker push ${{ secrets.DOCKER_HUB_USERNAME }}/docker-spring-boot-postgres:springv0.2
+        run: docker push ${{ secrets.DOCKER_HUB_USERNAME }}/docker-spring-boot-postgres:springv0.3
 
       - name: Checkout manifests repository
         uses: actions/checkout@v2
@@ -67,7 +67,7 @@ jobs:
 
       - name: Update manifest
         run: |
-          sed -i 's#image: .*$#image: '"${{ secrets.DOCKER_HUB_USERNAME }}/docker-spring-boot-postgres:springv0.2"'#g' manifests/work/back.yaml
+          sed -i 's#image: .*$#image: '"${{ secrets.DOCKER_HUB_USERNAME }}/docker-spring-boot-postgres:springv0.3"'#g' manifests/work/back.yaml
 
       - name: Commit and push changes
         run: |
@@ -75,7 +75,7 @@ jobs:
           git config --global user.email "bentarjem.sara@esprit.tn"
           git config --global user.name "sara-8"
           git add .
-          git commit -m "Update Spring Boot app image to v0.2"
+          git commit -m "Update Spring Boot app image to v0.3"
           git push https://store-Db:${{ secrets.PAT_GITHUB }}@github.com/store-Db/manifest.git HEAD:main
         env:
           GITHUB_TOKEN: ${{ secrets.PAT_GITHUB }}
@@ -102,7 +102,7 @@ jobs:
 
       - name: Sync Argo CD application
         env:
-          ARGOCD_SERVER: ${{ secrets.ARGOCD_SERVER }}
+          ARGOCD_SERVER: https://localhost:8080
           ARGOCD_USERNAME: ${{ secrets.ARGOCD_USERNAME }}
           ARGOCD_PASSWORD: ${{ secrets.ARGOCD_PASSWORD }}
         run: |
