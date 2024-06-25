@@ -55,7 +55,7 @@ jobs:
       - name: Build and tag Docker image
         run: docker build -t ${{ secrets.DOCKER_HUB_USERNAME }}/docker-spring-boot-postgres:${{ github.sha }} .
         env:
-          COMMIT_SHA: ${{ github.sha }
+          COMMIT_SHA: ${{ github.sha }}
           
       - name: Push Docker image
         run: docker push ${{ secrets.DOCKER_HUB_USERNAME }}/docker-spring-boot-postgres:${{ github.sha }}
