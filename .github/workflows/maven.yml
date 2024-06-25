@@ -79,31 +79,3 @@ jobs:
           git push https://store-Db:${{ secrets.PAT_GITHUB }}@github.com/store-Db/manifest.git HEAD:main
         env:
           GITHUB_TOKEN: ${{ secrets.PAT_GITHUB }}
- 
-      - name: Cache Argo CD CLI
-        id: cache-argocd
-        uses: actions/cache@v2
-        with:
-          path: ~/bin/argocd
-          key: ${{ runner.os }}-argocd-cli
-          restore-keys: |
-            ${{ runner.os }}-argocd-cli
-
-      - name: Install Argo CD CLI
-        if: steps.cache-argocd.outputs.cache-hit != 'true'
-        run: |
-          mkdir -p ~/bin
-          curl -sSL -o ~/bin/argocd https://github.com/argoproj/argo-cd/releases/latest/download/argocd-linux-amd64
-          chmod +x ~/bin/argocd
-        shell: bash
-
-      - name: Add ~/bin to PATH
-        run: echo "~/bin" >> $GITHUB_PATH
-
-      - name: Sync Argo CD application
-        env:
-          ARGOCD_SERVER:  ${{ secrets.ARGOCD_SERVER }}
-          ARGOCD_USERNAME: ${{ secrets.ARGOCD_USERNAME }}
-          ARGOCD_PASSWORD: ${{ secrets.ARGOCD_PASSWORD }}
-        run: |
-          argocd app sync spring-boot-app
