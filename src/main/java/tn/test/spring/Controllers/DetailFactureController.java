@@ -12,7 +12,8 @@ import java.util.Set;
 
 @RestController
 @RequestMapping("/DetailFac")
-@CrossOrigin(origins = "https://angular:8080")
+@CrossOrigin(origins = "*")
+//@CrossOrigin(origins = "https://angular:8080")
 public class DetailFactureController {
     @Autowired
     DetailFactureService detailFactureService ;
