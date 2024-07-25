@@ -9,8 +9,8 @@ import java.util.Date;
 import java.util.List;
 
 @RestController
-//@CrossOrigin(origins = "*")
-@CrossOrigin(origins = "http://angular:8080")
+@CrossOrigin(origins = "*")
+//@CrossOrigin(origins = "http://angular:8080")
 @RequestMapping("/reglement")
 
 public class ReglementController {
