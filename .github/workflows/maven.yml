@@ -69,7 +69,7 @@ jobs:
       - name: Push Trivy report to another repository
         run: |
           git clone git@github.com:store-Db/trivy-report.git
-          cd trivy-reports
+          cd trivy-report
           mv ../trivy-report.json ./trivy-report-${{ github.sha }}.json
           git config --global user.email "bentarjem.sara@esprit.tn"
           git config --global user.name "sara-8"
