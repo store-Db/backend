@@ -65,7 +65,6 @@ jobs:
         run: |
           trivy image --format json --output trivy-report.json --severity HIGH,CRITICAL ${{ secrets.DOCKER_HUB_USERNAME }}/docker-spring-boot-postgres:${{ github.sha }}
           
-      # Commit and push the JSON report to the separate repo
       - name: Push Trivy report to another repository
         run: |
           git clone https://github.com/store-Db/trivy-report.git
@@ -75,9 +74,10 @@ jobs:
           git config --global user.name "sara-8"
           git add .
           git commit -m "Add Trivy scan report for commit ${{ github.sha }}"
-           git push https://{{ secrets.GITHUB_TOKEN }}@github.com/store-Db/trivy-report.git
+          git push https://${{ secrets.GITHUB_TOKEN }}@github.com/store-Db/trivy-report.git
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
 
           
       - name: Push Docker image
