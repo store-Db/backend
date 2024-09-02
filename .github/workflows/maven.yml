@@ -56,6 +56,14 @@ jobs:
         run: docker build -t ${{ secrets.DOCKER_HUB_USERNAME }}/docker-spring-boot-postgres:${{ github.sha }} .
         env:
           COMMIT_SHA: ${{ github.sha }}
+            
+      - name: Install Trivy
+        run: |
+          curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b /usr/local/bin
+
+      - name: Scan Docker image for vulnerabilities
+        run: trivy image --severity HIGH,CRITICAL ${{ secrets.DOCKER_HUB_USERNAME }}/docker-spring-boot-postgres:${{ github.sha }}
+
           
       - name: Push Docker image
         run: docker push ${{ secrets.DOCKER_HUB_USERNAME }}/docker-spring-boot-postgres:${{ github.sha }}
