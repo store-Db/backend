@@ -71,11 +71,11 @@ jobs:
           git clone git@github.com:store-Db/trivy-report.git
           cd trivy-reports
           mv ../trivy-report.json ./trivy-report-${{ github.sha }}.json
-          git config --global user.email "you@example.com"
-          git config --global user.name "Your Name"
+          git config --global user.email "bentarjem.sara@esprit.tn"
+          git config --global user.name "sara-8"
           git add .
           git commit -m "Add Trivy scan report for commit ${{ github.sha }}"
-          git push https://your-username:${{ secrets.GITHUB_TOKEN }}@github.com/your-username/trivy-reports.git
+          git push git@github.com:store-Db/trivy-report.git
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
