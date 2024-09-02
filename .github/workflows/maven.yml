@@ -74,8 +74,6 @@ jobs:
           git config --global user.name "sara-8"
           git add .
           git commit -m "Add Trivy scan report for commit ${{ github.sha }}"
-          git branch -M main
-          git remote add origin git@github.com:store-Db/trivy-report.git
           git push -u origin main
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
