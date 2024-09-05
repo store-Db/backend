@@ -50,15 +50,17 @@ jobs:
         run: |
           curl -sSLo sonar-scanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.6.2.2472-linux.zip
           unzip sonar-scanner.zip
-          export PATH="$PATH:$(pwd)/sonar-scanner-4.6.2.2472-linux/bin"
+          sudo mv sonar-scanner-4.6.2.2472-linux /opt/sonar-scanner
+          sudo ln -s /opt/sonar-scanner/bin/sonar-scanner /usr/local/bin/sonar-scanner
+          export PATH=$PATH:/opt/sonar-scanner/bin
 
       - name: Run SonarCloud analysis
         run: |
           sonar-scanner \
-          -Dsonar.projectKey=store-db \
-          -Dsonar.sources=. \
-          -Dsonar.host.url=${{ secrets.SONARQUBE_URL }} \
-          -Dsonar.login=${{ secrets.SONARQUBE_TOKEN }}
+            -Dsonar.projectKey=store-db \
+            -Dsonar.sources=. \
+            -Dsonar.host.url=${{ secrets.SONARQUBE_URL }} \
+            -Dsonar.login=${{ secrets.SONARQUBE_TOKEN }}
 
       - name: Log in to Docker Hub
         uses: docker/login-action@v2
