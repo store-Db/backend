@@ -45,7 +45,13 @@ jobs:
           SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/test
           SPRING_DATASOURCE_USERNAME: postgres
           SPRING_DATASOURCE_PASSWORD: root
-      
+
+      - name: Install SonarScanner
+        run: |
+          curl -sSLo /usr/local/bin/sonar-scanner https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.6.2.2472-linux.zip
+          unzip sonar-scanner-cli-4.6.2.2472-linux.zip
+          sudo mv sonar-scanner-*/bin/sonar-scanner /usr/local/bin/
+          
       - name: Build and SonarCloud Analysis with Maven
         run: mvn clean install sonar:sonar -Dsonar.projectKey=store-db \
           -Dsonar.organization=store-db \
