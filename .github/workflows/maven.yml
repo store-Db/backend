@@ -47,7 +47,7 @@ jobs:
           SPRING_DATASOURCE_PASSWORD: root
       
       - name: Build and SonarCloud Analysis with Maven
-        run: mvn clean install org.sonarsource.scanner.maven:sonar -Dsonar.projectKey=store-db \
+        run: mvn clean install sonar:sonar -Dsonar.projectKey=store-db \
           -Dsonar.organization=store-db \
           -Dsonar.host.url=https://sonarcloud.io \
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
