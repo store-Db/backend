@@ -78,6 +78,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           COMMIT_SHA: ${{ github.sha }}
+          token: ${{ secrets.PAT_GITHUB }}
 
           
       - name: Push Docker image
