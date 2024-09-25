@@ -60,13 +60,13 @@ jobs:
       - name: Install Trivy
         run: |
           curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b /usr/local/bin
-        env:
-          COMMIT_SHA: ${{ github.sha }}
       
       - name: Scan Docker image and generate JSON report
         run: |
           trivy image --format json --output trivy-report.json --severity HIGH,CRITICAL ${{ secrets.DOCKER_HUB_USERNAME }}/docker-spring-boot-postgres:${{ github.sha }}
-          
+        env:
+          COMMIT_SHA: ${{ github.sha }}
+  
       - name: Push Trivy report to another repository
         run: |
           git clone https://github.com/store-Db/trivy-report.git
