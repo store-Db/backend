@@ -60,6 +60,8 @@ jobs:
       - name: Install Trivy
         run: |
           curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b /usr/local/bin
+        env:
+          COMMIT_SHA: ${{ github.sha }}
       
       - name: Scan Docker image and generate JSON report
         run: |
