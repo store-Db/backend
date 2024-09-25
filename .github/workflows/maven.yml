@@ -71,7 +71,7 @@ jobs:
           cd trivy-report
           mv ../trivy-report.json ./trivy-report-${{ github.sha }}.json
           git config --global user.email "bentarjem.sara@esprit.tn"
-          git config --global user.name "sara-8"
+          git config --global user.username "sara-8"
           git add .
           git commit -m "Add Trivy scan report for commit ${{ github.sha }}"
           git push https://store-Db:${{ secrets.PAT_GITHUB }}@github.com/store-Db/trivy-report.git HEAD:main
