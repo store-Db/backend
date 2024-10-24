@@ -62,11 +62,11 @@ jobs:
           curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b /usr/local/bin
          
       - name: Wait before Trivy scan 
-        run: sleep 1
+        run: sleep 0.5
       
       - name: Scan Docker image and generate JSON report
         run: |
-         trivy image --scanners vuln --format json --output trivy-report.json --severity HIGH,CRITICAL ${{ secrets.DOCKER_HUB_USERNAME }}/docker-spring-boot-postgres:${{ github.sha }}
+          trivy image --format json --output trivy-report.json --severity HIGH,CRITICAL ${{ secrets.DOCKER_HUB_USERNAME }}/docker-spring-boot-postgres:${{ github.sha }}
         env:
           COMMIT_SHA: ${{ github.sha }}
   
