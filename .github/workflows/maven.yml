@@ -62,7 +62,7 @@ jobs:
           curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b /usr/local/bin
          
       - name: Wait before Trivy scan 
-        run: sleep 1
+        run: sleep 10
       
       - name: Scan Docker image and generate JSON report
         run: |
