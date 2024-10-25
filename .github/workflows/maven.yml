@@ -69,7 +69,7 @@ jobs:
       
       - name: Scan Docker image and generate JSON report
         run: |
-          trivy image --scanners vuln --skip-dirs /usr/lib/jvm --format json --output trivy-report.json --severity HIGH,CRITICAL ${{ secrets.DOCKER_HUB_USERNAME }}/docker-spring-boot-postgres:${{ github.sha }}
+          trivy image --cache-dir /tmp/trivy-cache --scanners vuln --format json --output trivy-report.json --severity HIGH,CRITICAL ${{ secrets.DOCKER_HUB_USERNAME }}/docker-spring-boot-postgres:${{ github.sha }}
         env:
           COMMIT_SHA: ${{ github.sha }}
   
